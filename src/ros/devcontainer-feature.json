@@ -1,0 +1,20 @@
+{
+    "id": "ros",
+    "version": "1.0.0",
+    "name": "ROS 2 Development",
+    "description": "ROS 2 development tooling for C++ and Python.",
+    "documentationURL": "https://github.com/samyarsadat/Devcontainers",
+    "licenseURL": "https://github.com/samyarsadat/Devcontainers/blob/main/LICENSE",
+    "installsAfter": [
+        "ghcr.io/samyarsadat/devcontainers/features/foundation"
+    ],
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "Ranch-Hand-Robotics.rde-ros-2",
+                "ms-vscode.cpptools",
+                "ms-python.python"
+            ]
+        }
+    }
+}

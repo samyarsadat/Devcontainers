@@ -1,0 +1,8 @@
+{
+    "name": "Pico SDK Profile",
+    "image": "samyarsadat/custom_base_images:default-ubuntu-26.04",
+    "features": {
+        "ghcr.io/samyarsadat/devcontainers/features/foundation:1": {},
+        "ghcr.io/samyarsadat/devcontainers/features/pico:1": {}
+    }
+}

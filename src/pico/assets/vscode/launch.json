@@ -1,0 +1,29 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Pico Debug",
+            "type": "cortex-debug",
+            "request": "launch",
+            "servertype": "openocd",
+            "serverpath": "/usr/local/bin/openocd",
+            "cwd": "${workspaceFolder}",
+            "executable": "${command:cmake.launchTargetPath}",
+            "gdbPath": "/usr/bin/gdb-multiarch",
+            "configFiles": [
+                "/usr/local/share/openocd/scripts/interface/cmsis-dap.cfg",
+                "/usr/local/share/dev-environments/pico/openocd/pico.cfg"
+            ],
+            "rtos": "auto",
+            "searchDir": [
+                "/usr/local/share/openocd/scripts"
+            ],
+            "svdFile": "${env:PICO_SDK_PATH}/src/rp${env:PICO_CHIP}/hardware_regs/RP${env:PICO_CHIP}.svd",
+            "runToEntryPoint": "main",
+            "liveWatch": {
+                "enabled": true,
+                "samplesPerSecond": 2
+            }
+        }
+    ]
+}

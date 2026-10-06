@@ -1,0 +1,181 @@
+#!/usr/bin/env python3
+"""
+    Micro-ROS static library build script.
+    Copyright 2026 Samyar Sadat Akhavi
+
+    Permission is hereby granted, free of charge, to any person obtaining a copy
+    of this software and associated documentation files (the "Software"), to deal
+    in the Software without restriction, including without limitation the rights
+    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    copies of the Software, and to permit persons to whom the Software is
+    furnished to do so, subject to the following conditions:
+
+    The above copyright notice and this permission notice shall be included in all
+    copies or substantial portions of the Software.
+
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    SOFTWARE.
+"""
+
+import argparse
+import os
+import shutil
+import subprocess
+import sys
+from pathlib import Path
+
+
+ROS_COMMAND = [
+    "bash", "-ec",
+    '. "/opt/ros/$ROS_DISTRO/setup.bash"; '
+    '. /opt/microros/setup/install/local_setup.bash; exec ros2 "$@"',
+    "ros2"
+]
+
+
+def fail(message: str, status: int = 1) -> None:
+    print(message, file=sys.stderr)
+    raise SystemExit(status)
+
+def input_path(value: str) -> Path:
+    if not value:
+        raise argparse.ArgumentTypeError("path must not be empty")
+    return Path(value)
+
+
+def build_library(arguments: argparse.Namespace) -> None:
+    workspace = arguments.workspace.resolve()
+    if workspace == Path("/"):
+        fail("workspace must not be /", 2)
+
+    firmware = workspace / "firmware"
+    toolchain = arguments.toolchain.resolve()
+    meta = arguments.meta.resolve()
+    packages = list(dict.fromkeys(path.resolve() for path in arguments.extra_package))
+
+    for path in (toolchain, meta, *packages):
+        if path.is_relative_to(firmware):
+            fail(f"inputs must be outside the generated firmware directory: {path}", 2)
+
+    if not meta.is_file():
+        fail("colcon metadata file does not exist", 2)
+    if not toolchain.is_file():
+        fail("CMake toolchain file does not exist", 2)
+
+    for package in packages:
+        if not package.is_dir():
+            fail(f"extra package must be a directory: {package}", 2)
+
+    if arguments.clean:
+        print(f"cleaning {firmware}")
+
+        if firmware.is_symlink():
+            firmware.unlink()
+        elif firmware.exists():
+            shutil.rmtree(firmware)
+
+    if arguments.reuse_workspace:
+        if (
+            firmware.is_symlink() or
+            (firmware / "PLATFORM").read_text().rstrip("\n") != "generate_lib\ngeneric"
+        ):
+            fail("rebuild requires an existing generate-lib workspace")
+    else:
+        print("creating generate-lib workspace...")
+        subprocess.run(["sudo", "-n", "apt-get", "update"], check=True)
+        subprocess.run(
+            [*ROS_COMMAND, "run", "micro_ros_setup", "create_firmware_ws.sh", "generate_lib"],
+            cwd=workspace, check=True
+        )
+
+    extra_root = firmware / "mcu_ws/extra"
+    if extra_root.exists():
+        shutil.rmtree(extra_root)
+    extra_root.mkdir(mode=0o755, parents=True)
+
+    for package in packages:
+        (extra_root / package.name).symlink_to(package, target_is_directory=True)
+
+    output = firmware / "build"
+    if output.exists():
+        shutil.rmtree(output)
+
+    environment = os.environ.copy()
+    if arguments.debug:
+        environment["CMAKE_BUILD_DEBUG"] = "1"
+    else:
+        environment.pop("CMAKE_BUILD_DEBUG", None)
+
+    print("building micro-ROS static library...")
+    print(f"build mode is {'DEBUG' if arguments.debug else 'RELEASE'}!")
+
+    subprocess.run(
+        [*ROS_COMMAND, "run", "micro_ros_setup", "build_firmware.sh", str(toolchain), str(meta)],
+        cwd=workspace,
+        check=True,
+        env=environment
+    )
+
+
+def main() -> None:
+    build = argparse.ArgumentParser(
+        description=__doc__,
+        allow_abbrev=False,
+        formatter_class=argparse.RawDescriptionHelpFormatter
+    )
+
+    build.add_argument(
+        "--workspace", 
+        type=input_path, 
+        required=True, 
+        help="project workspace path"
+    )
+    build.add_argument(
+        "--toolchain",
+        type=input_path,
+        required=True,
+        help="project CMake toolchain file"
+    )
+    build.add_argument(
+        "--meta", 
+        type=input_path, 
+        required=True, 
+        help="project colcon metadata file"
+    )
+    build.add_argument(
+        "--extra-package",
+        type=input_path,
+        action="append",
+        default=[],
+        help="include an extra build package (repeatable, omitted packages will get removed)"
+    )
+    build.add_argument(
+        "-d",
+        dest="debug",
+        action="store_true",
+        help="enable a debug build (CMAKE_BUILD_DEBUG=1)"
+    )
+
+    mode = build.add_mutually_exclusive_group()
+    mode.add_argument(
+        "-c",
+        dest="clean",
+        action="store_true",
+        help="clear build files and re-build from scratch"
+    )
+    mode.add_argument(
+        "-r",
+        dest="reuse_workspace",
+        action="store_true",
+        help="rebuild firmware without recreating the workspace"
+    )
+
+    build_library(build.parse_args())
+
+if __name__ == "__main__":
+    main()

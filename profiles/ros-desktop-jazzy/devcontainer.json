@@ -1,0 +1,11 @@
+{
+    "name": "ROS 2 (Jazzy) Full Desktop Profile",
+    "image": "samyarsadat/custom_base_images:desktop-full-ros-jazzy",
+    "features": {
+        "ghcr.io/samyarsadat/devcontainers/features/foundation:1": {
+            "gui": true
+        },
+        "ghcr.io/samyarsadat/devcontainers/features/ros:1": {},
+        "ghcr.io/samyarsadat/devcontainers/features/microros-agent:1": {}
+    }
+}

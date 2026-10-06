@@ -1,0 +1,11 @@
+{
+    "name": "Pico SDK + micro-ROS (Jazzy) Profile",
+    "image": "samyarsadat/custom_base_images:base-ros-jazzy",
+    "features": {
+        "ghcr.io/samyarsadat/devcontainers/features/foundation:1": {},
+        "ghcr.io/samyarsadat/devcontainers/features/pico:1": {},
+        "ghcr.io/samyarsadat/devcontainers/features/ros:1": {},
+        "ghcr.io/samyarsadat/devcontainers/features/microros-build:1": {},
+        "ghcr.io/samyarsadat/devcontainers/features/microros-agent:1": {}
+    }
+}

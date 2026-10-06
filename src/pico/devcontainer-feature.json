@@ -1,0 +1,31 @@
+{
+    "id": "pico",
+    "version": "1.0.0",
+    "name": "Raspberry Pi Pico Development",
+    "description": "Pico SDK, Picotool, ELF inspection, OpenOCD, and VSCode config.",
+    "documentationURL": "https://github.com/samyarsadat/Devcontainers",
+    "licenseURL": "https://github.com/samyarsadat/Devcontainers/blob/main/LICENSE",
+    "installsAfter": [
+        "ghcr.io/samyarsadat/devcontainers/features/foundation"
+    ],
+    "containerEnv": {
+        "PICO_SDK_PATH": "/opt/pico/sdk",
+        "PICO_CHIP": "2040"
+    },
+    "postCreateCommand": [
+        "bash", "/usr/local/share/dev-environments/pico/post-create.sh"
+    ],
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "marus25.cortex-debug",
+                "ms-vscode.cmake-tools",
+                "ms-vscode.cpptools"
+            ],
+            "settings": {
+                "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools",
+                "cmake.generator": "Ninja"
+            }
+        }
+    }
+}

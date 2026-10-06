@@ -1,0 +1,27 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Pico: flash",
+            "type": "process",
+            "command": "/usr/local/bin/openocd",
+            "args": [
+                "-f", "/usr/local/share/openocd/scripts/interface/cmsis-dap.cfg",
+                "-f", "/usr/local/share/dev-environments/pico/openocd/pico.cfg",
+                "-c", "program {${command:cmake.launchTargetPath}} verify reset exit"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "Pico: reset",
+            "type": "process",
+            "command": "/usr/local/bin/openocd",
+            "args": [
+                "-f", "/usr/local/share/openocd/scripts/interface/cmsis-dap.cfg",
+                "-f", "/usr/local/share/dev-environments/pico/openocd/pico.cfg",
+                "-c", "init; reset run; shutdown"
+            ],
+            "problemMatcher": []
+        }
+    ]
+}

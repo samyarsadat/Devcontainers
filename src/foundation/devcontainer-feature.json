@@ -1,0 +1,15 @@
+{
+    "id": "foundation",
+    "version": "1.0.0",
+    "name": "Devcontainer Foundation",
+    "description": "Common development tools and optional Wayland GUI support.",
+    "documentationURL": "https://github.com/samyarsadat/Devcontainers",
+    "licenseURL": "https://github.com/samyarsadat/Devcontainers/blob/main/LICENSE",
+    "options": {
+        "gui": {
+            "type": "boolean",
+            "default": false,
+            "description": "Install packages and libraries required for Wayland GUI support."
+        }
+    }
+}

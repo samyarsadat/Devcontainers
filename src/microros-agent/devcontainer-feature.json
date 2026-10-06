@@ -1,0 +1,12 @@
+{
+    "id": "microros-agent",
+    "version": "1.0.0",
+    "name": "Micro-ROS Agent",
+    "description": "Micro-ROS agent feature overlay.",
+    "documentationURL": "https://github.com/samyarsadat/Devcontainers",
+    "licenseURL": "https://github.com/samyarsadat/Devcontainers/blob/main/LICENSE",
+    "installsAfter": [
+        "ghcr.io/samyarsadat/devcontainers/features/foundation",
+        "ghcr.io/samyarsadat/devcontainers/features/ros"
+    ]
+}
