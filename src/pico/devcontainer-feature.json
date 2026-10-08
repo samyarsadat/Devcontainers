@@ -1,6 +1,6 @@
 {
     "id": "pico",
-    "version": "1.0.0",
+    "version": "0.0.0",
     "name": "Raspberry Pi Pico Development",
     "description": "Pico SDK, Picotool, ELF inspection, OpenOCD, and VSCode config.",
     "documentationURL": "https://github.com/samyarsadat/Devcontainers",

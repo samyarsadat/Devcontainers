@@ -1,6 +1,8 @@
 name: Validate & Publish Features
 on:
-    workflow_dispatch:
+    release:
+        types:
+            - published
     pull_request:
         branches:
             - main
@@ -29,7 +31,7 @@ jobs:
                   base-path-to-features: ./src
 
     publish:
-        if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main'
+        if: github.event_name == 'release'
         name: Publish Devcontainer Features
         runs-on: ubuntu-latest
         permissions:
@@ -39,6 +41,14 @@ jobs:
         steps:
             - name: Checkout Repository
               uses: actions/checkout@v7
+
+            - name: Inject Release Version
+              run: |
+                  version="${GITHUB_REF_NAME#v}"
+                  for feature in src/*/devcontainer-feature.json; do
+                      jq --arg version "$version" '.version = $version' "$feature" > "$feature.tmp"
+                      mv "$feature.tmp" "$feature"
+                  done
 
             - name: Publish Features
               uses: devcontainers/action@v1

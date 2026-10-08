@@ -1,6 +1,6 @@
 {
     "id": "ros",
-    "version": "1.0.0",
+    "version": "0.0.0",
     "name": "ROS 2 Development",
     "description": "ROS 2 development tooling for C++ and Python.",
     "documentationURL": "https://github.com/samyarsadat/Devcontainers",

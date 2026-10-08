@@ -1,6 +1,6 @@
 {
     "id": "microros-build",
-    "version": "1.0.0",
+    "version": "0.0.0",
     "name": "Micro-ROS Library Builder",
     "description": "Micro-ROS library build (micro_ros_setup) feature overlay.",
     "documentationURL": "https://github.com/samyarsadat/Devcontainers",
