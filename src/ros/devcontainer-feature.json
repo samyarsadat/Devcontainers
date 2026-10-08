@@ -11,10 +11,21 @@
     "customizations": {
         "vscode": {
             "extensions": [
+                "althack.ament-task-provider",
                 "Ranch-Hand-Robotics.rde-ros-2",
+                "Ranch-Hand-Robotics.urdf-editor",
                 "ms-vscode.cpptools",
-                "ms-python.python"
-            ]
+                "ms-python.python",
+                "redhat.vscode-yaml"
+            ],
+            "settings": {
+                "files.associations": {
+                    "*.repos": "yaml",
+                    "*.world": "xml",
+                    "*.xacro": "xml"
+                },
+                "ament-task-provider.envSetup": "source /usr/local/lib/dev-environments/ros-setup.sh"
+            }
         }
     }
 }

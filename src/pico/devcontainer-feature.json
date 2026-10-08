@@ -9,12 +9,8 @@
         "ghcr.io/samyarsadat/devcontainers/features/foundation"
     ],
     "containerEnv": {
-        "PICO_SDK_PATH": "/opt/pico/sdk",
-        "PICO_CHIP": "2040"
+        "PICO_SDK_PATH": "/opt/pico/sdk"
     },
-    "postCreateCommand": [
-        "bash", "/usr/local/share/dev-environments/pico/post-create.sh"
-    ],
     "customizations": {
         "vscode": {
             "extensions": [
@@ -23,8 +19,7 @@
                 "ms-vscode.cpptools"
             ],
             "settings": {
-                "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools",
-                "cmake.generator": "Ninja"
+                "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools"
             }
         }
     }

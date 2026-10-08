@@ -55,11 +55,6 @@ python3 -m venv --clear "$venv"
 "$venv/bin/python" -m pip install --disable-pip-version-check elf-size-analyze
 ln -sfn "$venv/bin/elf-size-analyze" "$FEATURE_BIN/elf-size-analyze"
 
-asset_root="$FEATURE_SHARE/pico"
-install -d -m 0755 "$asset_root/"{vscode,openocd}
-
-install -m 0644 "$(dirname "$0")"/assets/openocd/pico.cfg "$asset_root/openocd/"
-install -m 0644 "$(dirname "$0")"/assets/vscode/*         "$asset_root/vscode/"
-install -m 0644 "$(dirname "$0")"/scripts/post-create.sh  "$asset_root/post-create.sh"
+install -D -m 0644 "$(dirname "$0")/assets/openocd/pico.cfg" "$FEATURE_SHARE/pico/openocd/pico.cfg"
 
 apt_cleanup

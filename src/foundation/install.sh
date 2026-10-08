@@ -6,7 +6,7 @@ set -Eeuo pipefail
 
 packages=(ca-certificates curl git jq rsync unzip xz-utils bash-completion shellcheck)
 if test "$GUI" = "true"; then
-    packages+=(libgl1-mesa-dri mesa-utils qtwayland5 wayland-utils)
+    packages+=(libgl1 libegl1 libgl1-mesa-dri libxkbcommon-x11-0 mesa-utils qtwayland5 wayland-utils)
 fi
 apt_install "${packages[@]}"
 

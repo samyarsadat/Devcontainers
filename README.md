@@ -10,12 +10,12 @@
 <br>
 
 ----
-This repository contains feature sources and image profiles for all of my custom Development Containers.
+This repository contains feature sources, image profiles, and workspace templates for all of my custom Development Containers.
 
 ### CI Status
 
 [![Build & Push Images](https://github.com/samyarsadat/Devcontainers/actions/workflows/images.yml/badge.svg)](https://github.com/samyarsadat/Devcontainers/actions/workflows/images.yml) \
-[![Validate & Publish Features](https://github.com/samyarsadat/Devcontainers/actions/workflows/features.yml/badge.svg)](https://github.com/samyarsadat/Devcontainers/actions/workflows/features.yml)
+[![Push Features & Templates](https://github.com/samyarsadat/Devcontainers/actions/workflows/features.yml/badge.svg)](https://github.com/samyarsadat/Devcontainers/actions/workflows/features.yml)
 
 > [!NOTE]
 > Profile images are automatically updated every Tuesday.
@@ -25,7 +25,8 @@ This repository contains feature sources and image profiles for all of my custom
 ### Repository Structure
 
 Re-usable Devcontainer features and their associated files are under [`./src`](./src/).\
-Profile image definitions are under [`./profiles`](./profiles/).
+Profile image definitions are under [`./profiles`](./profiles/).\
+Workspace templates are under [`./templates`](./templates/).
 
 > [!NOTE]
 > When using a CMSIS-DAP probe with the Pico, be sure to set the `PICO_CHIP` environment variable
@@ -50,6 +51,13 @@ Profile image definitions are under [`./profiles`](./profiles/).
 | [pico-sdk](profiles/pico-sdk/devcontainer.json)                       | Pico SDK Profile (Ubuntu 26.04)      |
 | [pico-microros-jazzy](profiles/pico-microros-jazzy/devcontainer.json) | Pico SDK + micro-ROS (Jazzy) Profile |
 | [ros-desktop-jazzy](profiles/ros-desktop-jazzy/devcontainer.json)     | ROS 2 (Jazzy) Full Desktop Profile   |
+
+### List of Workspace Templates
+
+| Name                                                                  | Description                                           |
+| --------------------------------------------------------------------- | ----------------------------------------------------- |
+| [pico-workspace](templates/pico-workspace/devcontainer-template.json) | Pico SDK development with optional micro-ROS tooling. |
+| [ros-workspace](templates/ros-workspace/devcontainer-template.json)   | ROS 2 desktop development workspace.                  |
 
 <br>
 

@@ -1,0 +1,22 @@
+{
+    "name": "ROS 2 Workspace (NVIDIA + Wayland)",
+    "image": "ghcr.io/samyarsadat/devcontainers/profiles/${templateOption:profile}:latest",
+    "capAdd": [
+        "SYS_PTRACE"
+    ],
+    "runArgs": [
+        "--network=host",
+        "--runtime=nvidia",
+        "--gpus=all"
+    ],
+    "containerEnv": {
+        "NVIDIA_DRIVER_CAPABILITIES": "all",
+        "WAYLAND_DISPLAY": "/tmp/wayland.sock",
+        "DISPLAY": "${localEnv:DISPLAY}",
+        "XDG_SESSION_TYPE": "wayland"
+    },
+    "mounts": [
+        "source=${localEnv:XDG_RUNTIME_DIR}/${localEnv:WAYLAND_DISPLAY},target=/tmp/wayland.sock,type=bind,readonly",
+        "source=/tmp/.X11-unix,target=/tmp/.X11-unix,type=bind,readonly"
+    ]
+}

@@ -1,0 +1,17 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "ROS 2: Launch Current File",
+            "type": "ros2",
+            "request": "launch",
+            "target": "${file}",
+            "preLaunchTask": "Build ROS Workspace (Debug)"
+        },
+        {
+            "name": "ROS 2: Attach to Node",
+            "type": "ros2",
+            "request": "attach"
+        }
+    ]
+}

@@ -1,0 +1,23 @@
+{
+    "id": "ros-workspace",
+    "version": "0.0.0",
+    "name": "ROS 2 Workspace",
+    "description": "ROS 2 desktop development workspace.",
+    "documentationURL": "https://github.com/samyarsadat/Devcontainers",
+    "licenseURL": "https://github.com/samyarsadat/Devcontainers/blob/main/LICENSE",
+    "options": {
+        "profile": {
+            "type": "string",
+            "enum": [
+                "ros-desktop-jazzy"
+            ],
+            "default": "ros-desktop-jazzy",
+            "description": "Devcontainer image profile."
+        }
+    },
+    "platforms": ["C++", "Python"],
+    "optionalPaths": [
+        ".github/*",
+        ".devcontainer/nvidia-wayland/*"
+    ]
+}

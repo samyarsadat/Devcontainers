@@ -1,0 +1,10 @@
+{
+    "name": "ROS 2 Workspace",
+    "image": "ghcr.io/samyarsadat/devcontainers/profiles/${templateOption:profile}:latest",
+    "capAdd": [
+        "SYS_PTRACE"
+    ],
+    "runArgs": [
+        "--network=host"
+    ]
+}

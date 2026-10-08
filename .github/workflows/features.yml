@@ -1,4 +1,4 @@
-name: Validate & Publish Features
+name: Push Features & Templates
 on:
     release:
         types:
@@ -8,6 +8,7 @@ on:
             - main
         paths:
             - src/**
+            - templates/**
             - .github/workflows/features.yml
     push: *changes
 
@@ -16,7 +17,7 @@ concurrency: features-${{github.ref}}
 jobs:
     validate:
         if: github.event_name == 'pull_request' || github.event_name == 'push'
-        name: Validate Devcontainer Features
+        name: Validate Features & Templates
         runs-on: ubuntu-latest
         permissions:
             contents: read
@@ -31,9 +32,12 @@ jobs:
                   validate-only: true
                   base-path-to-features: ./src
 
+            - name: Validate Template JSON
+              run: find templates -type f -name "*.json" -exec jq empty {} +
+
     publish:
         if: github.event_name == 'release'
-        name: Publish Devcontainer Features
+        name: Publish Features & Templates
         runs-on: ubuntu-latest
         permissions:
             contents: read
@@ -46,9 +50,9 @@ jobs:
             - name: Inject Release Version
               run: |
                   version="${GITHUB_REF_NAME#v}"
-                  for feature in src/*/devcontainer-feature.json; do
-                      jq --arg version "$version" '.version = $version' "$feature" > "$feature.tmp"
-                      mv "$feature.tmp" "$feature"
+                  for metadata in src/*/devcontainer-feature.json templates/*/devcontainer-template.json; do
+                      jq --arg version "$version" '.version = $version' "$metadata" > "$metadata.tmp"
+                      mv "$metadata.tmp" "$metadata"
                   done
 
             - name: Publish Features
@@ -57,6 +61,16 @@ jobs:
                   publish-features: true
                   base-path-to-features: ./src
                   features-namespace: samyarsadat/devcontainers/features
+                  disable-repo-tagging: true
+              env:
+                  GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
+            - name: Publish Templates
+              uses: devcontainers/action@v1
+              with:
+                  publish-templates: true
+                  base-path-to-templates: ./templates
+                  templates-namespace: samyarsadat/devcontainers/templates
                   disable-repo-tagging: true
               env:
                   GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}

@@ -1,0 +1,20 @@
+{
+    "id": "pico-workspace",
+    "version": "0.0.0",
+    "name": "Pico Workspace",
+    "description": "Pico SDK development with optional micro-ROS tooling.",
+    "documentationURL": "https://github.com/samyarsadat/Devcontainers",
+    "licenseURL": "https://github.com/samyarsadat/Devcontainers/blob/main/LICENSE",
+    "options": {
+        "profile": {
+            "type": "string",
+            "enum": [
+                "pico-sdk",
+                "pico-microros-jazzy"
+            ],
+            "default": "pico-sdk",
+            "description": "Devcontainer image profile."
+        }
+    },
+    "platforms": ["C", "C++"]
+}

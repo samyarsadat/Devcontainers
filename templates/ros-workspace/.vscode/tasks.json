@@ -1,0 +1,103 @@
+{
+    "version": "2.0.0",
+    "type": "shell",
+    "options": {
+        "env": {
+            "BASH_ENV": "/usr/local/lib/dev-environments/ros-setup.sh"
+        },
+        "shell": {
+            "executable": "/bin/bash",
+            "args": ["-c"]
+        }
+    },
+    "tasks": [
+        {
+            "label": "Build ROS Workspace",
+            "type": "colcon",
+            "command": "colcon",
+            "args": ["build"],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": "$colcon-gcc"
+        },
+        {
+            "label": "Build ROS Workspace (Debug)",
+            "type": "colcon",
+            "command": "colcon",
+            "args": [
+                "build", "--cmake-args",
+                "-DCMAKE_BUILD_TYPE=Debug",
+                "-DCMAKE_EXPORT_COMPILE_COMMANDS=ON"
+            ],
+            "group": "build",
+            "problemMatcher": "$colcon-gcc"
+        },
+        {
+            "label": "Test ROS Workspace",
+            "command": "source install/setup.bash && colcon test && colcon test-result --all --verbose",
+            "dependsOn": "Build ROS Workspace",
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Install ROS Dependencies",
+            "command": "sudo apt-get update && rosdep update && rosdep install --from-paths src --ignore-src -y",
+            "problemMatcher": []
+        },
+        {
+            "label": "Import ROS Repositories",
+            "type": "process",
+            "command": "vcs",
+            "args": [
+                "import", "src",
+                "--input", "${input:repositories}"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "Create ROS C++ Package",
+            "command": "ros2",
+            "args": [
+                "pkg", "create",
+                "--destination-directory", "src",
+                "--build-type", "ament_cmake",
+                "${input:package}"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "Create ROS Python Package",
+            "command": "ros2",
+            "args": [
+                "pkg", "create",
+                "--destination-directory", "src",
+                "--build-type", "ament_python",
+                "${input:package}"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "Format ROS C/C++",
+            "command": "ament_uncrustify --reformat src || ament_uncrustify src",
+            "problemMatcher": "$ament_uncrustify"
+        }
+    ],
+    "inputs": [
+        {
+            "id": "package",
+            "type": "promptString",
+            "description": "package name"
+        },
+        {
+            "id": "repositories",
+            "type": "promptString",
+            "description": "repository manifest path",
+            "default": "src/ros2.repos"
+        }
+    ]
+}

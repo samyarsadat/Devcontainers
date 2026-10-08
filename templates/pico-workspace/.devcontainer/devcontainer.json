@@ -1,0 +1,12 @@
+{
+    "name": "Pico Workspace",
+    "image": "ghcr.io/samyarsadat/devcontainers/profiles/${templateOption:profile}:latest",
+    "runArgs": [
+        "--network=host",
+        "--volume=/dev:/dev",
+        "--device-cgroup-rule=c *:* rmw"
+    ],
+    "containerEnv": {
+        "PICO_CHIP": "2040"
+    }
+}
