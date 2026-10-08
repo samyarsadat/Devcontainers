@@ -3,12 +3,13 @@ on:
     workflow_dispatch:
     schedule:
         - cron: "30 5 * * TUE"   # Every Tuesday at 05:30 AM UTC
-    pull_request:
+    pull_request: &changes
         branches:
             - main
         paths:
             - profiles/**
             - .github/workflows/images.yml
+    push: *changes
 
 permissions:
     contents: read
@@ -49,6 +50,6 @@ jobs:
                   configFile: profiles/${{matrix.tag}}/devcontainer.json
                   imageName: ghcr.io/samyarsadat/devcontainers/profiles/${{matrix.tag}}
                   imageTag: latest,${{github.sha}}
-                  push: ${{case(github.event_name == 'pull_request', 'never', 'always')}}
+                  push: ${{case(github.event_name == 'workflow_dispatch' || github.event_name == 'schedule', 'always', 'never')}}
                   cacheFrom: type=gha,scope=${{matrix.tag}}
                   cacheTo: ${{case(github.event_name != 'pull_request', format('type=gha,scope={0},mode=max', matrix.tag), '')}}

@@ -3,18 +3,19 @@ on:
     release:
         types:
             - published
-    pull_request:
+    pull_request: &changes
         branches:
             - main
         paths:
             - src/**
             - .github/workflows/features.yml
+    push: *changes
 
 concurrency: features-${{github.ref}}
 
 jobs:
     validate:
-        if: github.event_name == 'pull_request'
+        if: github.event_name == 'pull_request' || github.event_name == 'push'
         name: Validate Devcontainer Features
         runs-on: ubuntu-latest
         permissions:
