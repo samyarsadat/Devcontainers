@@ -17,7 +17,7 @@ build_ros_overlay() (
         trap 'rm -rf "$tmp_dir"' EXIT
         cd "$tmp_dir"
 
-        git clone --branch "$ROS_DISTRO" --depth 1 "$repository" src/package
+        git clone --branch "$ROS_DISTRO" --depth 1 "$repository" src
         rosdep install --from-paths src --ignore-src -r -y
 
         rm -rf "$install_root/install"
