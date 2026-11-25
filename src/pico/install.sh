@@ -29,7 +29,6 @@ git -C "$sdk_root" submodule update --init --recursive --depth 1
     cd "$tmp_dir/picotool"
 
     git clone --branch "$PICO_SDK_VERSION" --depth 1 https://github.com/raspberrypi/picotool.git .
-    git submodule update --init --recursive --depth 1
 
     cmake -B build -G Ninja -DPICO_SDK_PATH="$sdk_root"
     cmake --build build --parallel
