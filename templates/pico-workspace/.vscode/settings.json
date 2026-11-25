@@ -1,3 +1,32 @@
 {
-    "cmake.generator": "Ninja"
+    "cmake.options.statusBarVisibility": "hidden",
+    "cmake.options.advanced": {
+        "build": {
+            "statusBarVisibility": "visible"
+        },
+        "buildTarget": {
+            "statusBarVisibility": "hidden"
+        },
+        "launch": {
+            "statusBarVisibility": "hidden"
+        },
+        "launchTarget": {
+            "statusBarVisibility": "visible"
+        },
+        "debug": {
+            "statusBarVisibility": "hidden"
+        },
+        "variant": {
+            "statusBarVisibility": "icon"
+        },
+        "kit": {
+            "statusBarVisibility": "icon"
+        },
+        "configurePreset": {
+            "statusBarVisibility": "visible"
+        },
+        "buildPreset": {
+            "statusBarVisibility": "hidden"
+        }
+    }
 }

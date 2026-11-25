@@ -24,7 +24,8 @@
                     "*.world": "xml",
                     "*.xacro": "xml"
                 },
-                "ament-task-provider.envSetup": "source /usr/local/lib/dev-environments/ros-setup.sh"
+                "ament-task-provider.envSetup": "source /usr/local/lib/dev-environments/ros-setup.sh",
+                "ROS2.rosSetupScript": "/usr/local/lib/dev-environments/ros-setup.sh"
             }
         }
     }

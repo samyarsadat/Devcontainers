@@ -11,7 +11,6 @@
             "executable": "${command:cmake.launchTargetPath}",
             "gdbPath": "/usr/bin/gdb-multiarch",
             "configFiles": [
-                "/usr/local/share/openocd/scripts/interface/cmsis-dap.cfg",
                 "/usr/local/share/dev-environments/pico/openocd/pico.cfg"
             ],
             "rtos": "auto",

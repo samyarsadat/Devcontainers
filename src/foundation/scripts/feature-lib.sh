@@ -20,3 +20,7 @@ apt_cleanup() {
     apt-get clean
     rm -rf /var/lib/apt/lists/*
 }
+
+run_as_nonroot() {
+    runuser -u "$USERNAME" -- env HOME="$USER_HOME" "$@"
+}

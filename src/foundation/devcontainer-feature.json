@@ -5,6 +5,9 @@
     "description": "Common development tools and optional Wayland GUI support.",
     "documentationURL": "https://github.com/samyarsadat/Devcontainers",
     "licenseURL": "https://github.com/samyarsadat/Devcontainers/blob/main/LICENSE",
+    "containerEnv": {
+        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
+    },
     "options": {
         "gui": {
             "type": "boolean",

@@ -1,8 +1,8 @@
 build:
     merge-install: true
     symlink-install: true
-    cmake-args:
-        - -DCMAKE_BUILD_TYPE=RelWithDebInfo
-        - -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
+    mixin:
+        - rel-with-deb-info
+
 test:
     merge-install: true

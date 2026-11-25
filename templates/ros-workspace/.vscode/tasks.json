@@ -2,6 +2,7 @@
     "version": "2.0.0",
     "type": "shell",
     "options": {
+        "cwd": "${workspaceFolder}",
         "env": {
             "BASH_ENV": "/usr/local/lib/dev-environments/ros-setup.sh"
         },
@@ -26,18 +27,13 @@
             "label": "Build ROS Workspace (Debug)",
             "type": "colcon",
             "command": "colcon",
-            "args": [
-                "build", "--cmake-args",
-                "-DCMAKE_BUILD_TYPE=Debug",
-                "-DCMAKE_EXPORT_COMPILE_COMMANDS=ON"
-            ],
+            "args": ["build", "--mixin", "debug"],
             "group": "build",
             "problemMatcher": "$colcon-gcc"
         },
         {
             "label": "Test ROS Workspace",
-            "command": "source install/setup.bash && colcon test && colcon test-result --all --verbose",
-            "dependsOn": "Build ROS Workspace",
+            "command": "source install/setup.bash && colcon test --event-handlers console_direct+ && colcon test-result --all --verbose",
             "group": {
                 "kind": "test",
                 "isDefault": true
@@ -61,6 +57,7 @@
         },
         {
             "label": "Create ROS C++ Package",
+            "type": "ROS2",
             "command": "ros2",
             "args": [
                 "pkg", "create",
@@ -72,6 +69,7 @@
         },
         {
             "label": "Create ROS Python Package",
+            "type": "ROS2",
             "command": "ros2",
             "args": [
                 "pkg", "create",
@@ -84,6 +82,13 @@
         {
             "label": "Format ROS C/C++",
             "command": "ament_uncrustify --reformat src || ament_uncrustify src",
+            "problemMatcher": "$ament_uncrustify"
+        },
+        {
+            "label": "Check ROS C/C++ Formatting",
+            "type": "ament",
+            "task": "uncrustify",
+            "path": "src",
             "problemMatcher": "$ament_uncrustify"
         }
     ],
