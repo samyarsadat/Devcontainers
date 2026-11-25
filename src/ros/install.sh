@@ -20,8 +20,10 @@ chmod 0644 "$FEATURE_SHARE/ros-overlays"
 install -m 0644 "$(dirname "$0")/scripts/ros-setup.sh" "$FEATURE_LIB/ros-setup.sh"
 install -m 0644 "$(dirname "$0")/scripts/ros-lib.sh" "$FEATURE_LIB/ros-lib.sh"
 
-run_as_nonroot colcon mixin add default https://raw.githubusercontent.com/colcon/colcon-mixin-repository/master/index.yaml
-run_as_nonroot colcon mixin update default
+run_as_nonroot colcon --log-base /dev/null \
+    mixin add default https://raw.githubusercontent.com/colcon/colcon-mixin-repository/master/index.yaml
+run_as_nonroot colcon --log-base /dev/null \
+    mixin update default
 
 bash_init=". $FEATURE_LIB/ros-setup.sh"
 grep -qxF "$bash_init" /etc/bash.bashrc || printf "\n%s\n" "$bash_init" >> /etc/bash.bashrc
