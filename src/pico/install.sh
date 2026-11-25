@@ -42,10 +42,15 @@ git -C "$sdk_root" submodule update --init --recursive --depth 1
 
     git clone --filter=blob:none --no-checkout https://github.com/raspberrypi/openocd.git .
     git checkout --detach "$OPENOCD_COMMIT"
-    git submodule update --init --recursive --depth 1
 
     ./bootstrap
-    ./configure --disable-werror --enable-cmsis-dap --disable-ftdi
+    ./configure \
+        --disable-werror \
+        --disable-ftdi \
+        --disable-jlink \
+        --enable-cmsis-dap \
+        --enable-cmsis-dap-v2
+    
     make -j"$(nproc)"
     make install
 )
